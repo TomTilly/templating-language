@@ -1,8 +1,11 @@
-Layout.tl
+Idea 1
+
+Layout.ntl
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {{ head }}
+    {{ head.ntl }}
+    {{ ../partials/styles.ntl }}
   </head>
   <body>
     <header>
@@ -13,44 +16,143 @@ Layout.tl
       </nav>
     </header>
     <main>
-      {{ main }}
+      {{ main.ntl }}
     </main>
   </body>
 </html>
 
-
 pages/
     page-1/
-        head.tl
-        header.tl
-        main.tl
+        head.ntl
+        header.ntl
+        main.ntl
     page-2/
-        head.tl
-        header.tl
-        main.tl
+        head.ntl
+        header.ntl
+        main.ntl
 partials/
-    styles.tl
+    styles.ntl
 assets/
     styles.css
     scripts.js
 
 
-pages/page-1/head.tl
+pages/page-1/head.ntl
 {{ styles }}
 <title>Home</title>
 
-pages/page-2/head.tl
+pages/page-2/head.ntl
 {{ styles }}
 <title>About</title>
 
-partials/styles.tl
+partials/styles.ntl
 <link href="./styles.css" />
 <link href="googlefont.css" />
 
 CLI program
-tl <layout-file> <input dir> <output dir>
-tl Layout.tl pages dist
+ntl <layout-file> <input dir> <output dir>
+ntl Layout.ntl pages/page-1 dist
+Outputs
+/dist
+    page-1.html
+
+ntl Layout.ntl pages/* dist
 Outputs
 /dist
     page-1.html
     page-2.html
+
+-------------------------
+
+Idea 2
+
+Layout.yatl
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ head | title, stylesheet }}
+  </head>
+  <body>
+    {{ header | activePage }}
+    <main>
+      {{ main | content }}
+    </main>
+  </body>
+</html>
+
+---
+Head.yatl
+<link href="global.css" />
+<link href="{{ stylesheet }}" />
+<title>{{ title }}</title>
+
+---
+header.yatl
+<header>
+  <img src="./logo.png" />
+  <nav>
+    {{ loop:nav | links }}
+  </nav>
+</header>
+
+---
+nav.yatl
+<a href="{{ href }}" class="{{ activePage ? 'current' }}">{{ text }}</a>
+
+---
+Home.json
+{
+  "title": "Willy Wonka's Chocalate Factory | Home Page",
+  "content": "<h1>Chocolate Factory</h1>",
+  "content": "link:./content/home.html",
+  "links": {
+    "src": "./nav.json"
+  }
+  "stylesheet" "./home.css"
+}
+
+---
+nav.json
+[
+  {
+    href: "/",
+    text: "Home"
+  },
+  {
+    href: "/about",
+    text: "About",
+  },
+  etc..
+}
+
+---
+Terminal
+yatl Layout.yatl Home.json
+
+
+-------------------------
+
+Idea 3
+
+
+Layout.yatl
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ head }}
+  </head>
+  <body>
+    {{ header }}
+    <main>
+      {{ main }}
+    </main>
+  </body>
+</html>
+
+content/
+  home/
+    head.json
+
+
+yatl Layout.yatl
+
