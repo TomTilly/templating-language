@@ -1,0 +1,53 @@
+Layout.tl
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ head }}
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a>Home</a>
+        <a>About</a>
+        <a>Contact</a>
+      </nav>
+    </header>
+    <main>
+      {{ main }}
+    </main>
+  </body>
+</html>
+
+
+pages/
+    page-1/
+        head.tl
+        header.tl
+        main.tl
+    page-2/
+        head.tl
+        header.tl
+        main.tl
+partials/
+    styles.tl
+
+
+pages/page-1/head.tl
+{{ styles }}
+<title>Home</title>
+
+pages/page-2/head.tl
+{{ styles }}
+<title>About</title>
+
+partials/styles.tl
+<link href="./styles.css" />
+<link href="googlefont.css" />
+
+CLI program
+tl <layout-file> <input dir> <output dir>
+tl Layout.tl pages dist
+Outputs
+/dist
+    page-1.html
+    page-2.html
