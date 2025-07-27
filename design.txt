@@ -30,6 +30,9 @@ pages/
         main.tl
 partials/
     styles.tl
+assets/
+    styles.css
+    scripts.js
 
 
 pages/page-1/head.tl
