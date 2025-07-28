@@ -7,17 +7,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <dirent.h>
+#include <string.h>
+#include <limits.h>
 
 int main(int argc, const char * argv[]) {
-    if (argc != 4) {
+    if (argc != 3) {
         printf("error: bad arguments\n");
-        printf("Usage: tl [layout file] [input dir] [output dir]\n");
+        printf("Usage: tl [layout file] [input dir]\n");
         return EXIT_FAILURE;
     }
 
     const char * template_file_path = argv[1];
     const char * input_dir_path = argv[2];
+    // TODO: Replace with safer string cat
+    char output_file_name[PATH_MAX] = {0};
+    strcat(output_file_name, input_dir_path);
+    strcat(output_file_name, ".html");
 //    const char * output_dir_path = argv[3];
 
     //
@@ -29,7 +34,15 @@ int main(int argc, const char * argv[]) {
         return EXIT_FAILURE;
     }
 
-    
+    //
+    // Open output file
+    //
+    FILE * output_file = fopen("build", "w");
+    if (output_file == NULL) {
+        printf("error: couldn't open output file %s\n", "build");
+        return EXIT_FAILURE;
+    }
+
 
     return EXIT_SUCCESS;
 }
